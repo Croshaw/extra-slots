@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "extraslots",
+  "version": "${version}",
+  "name": "Extra Slots",
+  "description": "",
+  "authors": [
+    "Croshaw"
+  ],
+  "contact": {
+    "repo": "https://github.com/Croshaw/extra-slots"
+  },
+  "license": "MIT",
+  "icon": "assets/extraslots/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "me.croshaw.extraslots.client.ExtraSlotsClient"
+    ],
+    "main": [
+      "me.croshaw.extraslots.ExtraSlots"
+    ]
+  },
+  "mixins": [
+    "extraslots.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
