@@ -11,7 +11,7 @@
     "repo": "https://github.com/Croshaw/extra-slots"
   },
   "license": "MIT",
-  "icon": "assets/extraslots/icon.png",
+  "icon": "assets/extraslots/icon256.png",
   "environment": "*",
   "entrypoints": {
     "client": [

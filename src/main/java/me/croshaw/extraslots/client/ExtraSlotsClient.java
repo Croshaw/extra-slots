@@ -1,6 +1,7 @@
 package me.croshaw.extraslots.client;
 
 import me.croshaw.extraslots.ExtraSlots;
+import me.croshaw.extraslots.client.widgets.IScrollableWidget;
 import me.croshaw.extraslots.utils.InventoryHelper;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -13,6 +14,10 @@ public class ExtraSlotsClient implements ClientModInitializer {
         ClientPlayNetworking.registerGlobalReceiver(SYNC_MESSAGE_S2C, (client, handler, buf, responseSender) -> {
             if(client.player == null) return;
             InventoryHelper.getExtendedPlayer(client.player).readExtendedNbtData(buf.readNbt());
+            if(buf.readBoolean() && client.player.currentScreenHandler != null) {
+                if(client.currentScreen != null && client.currentScreen instanceof IScrollableWidget handledScreen)
+                    handledScreen.extraSlots$refreshWidget();
+            }
         });
     }
 }

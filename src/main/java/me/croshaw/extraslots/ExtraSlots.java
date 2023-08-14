@@ -23,7 +23,7 @@ public class ExtraSlots implements ModInitializer {
         });
 
         ServerPlayNetworking.registerGlobalReceiver(REQUEST_SYNC_MESSAGE_C2S, (server, player, handler, buf, responseSender) -> {
-            InventoryHelper.sendToClient(player);
+            InventoryHelper.sendToClient(player, false);
         });
         ServerPlayerEvents.COPY_FROM.register((oldPlayer, newPlayer, alive) -> {
             if(alive || oldPlayer.getWorld().getGameRules().getBoolean(GameRules.KEEP_INVENTORY)) {

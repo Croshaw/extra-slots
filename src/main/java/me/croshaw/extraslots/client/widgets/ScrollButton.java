@@ -30,8 +30,8 @@ public class ScrollButton extends TexturedButtonWidget {
         }
 
         RenderSystem.enableDepthTest();
-        drawTexture(matrices, this.x, this.y, (float)i, (float)this.v, this.width, this.height, 256, 256);
-        drawTexture(matrices, this.x, this.y+this.height-1, (float)i, (float)this.v+52, this.width, 1, 256, 256);
+        drawTexture(matrices, this.x, this.y, (float) i, (float) this.v, this.width, this.height, 256, 256);
+        drawTexture(matrices, this.x, this.y + this.height - 1, (float) i, (float) this.v + 52, this.width, 1, 256, 256);
         if (this.hovered) {
             this.renderTooltip(matrices, mouseX, mouseY);
         }

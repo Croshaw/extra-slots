@@ -23,7 +23,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(HandledScreen.class)
 public abstract class HandledScreenMixin<T extends ScreenHandler> extends Screen implements IScrollableWidget {
-
     @Shadow protected int x;
     @Shadow protected int backgroundWidth;
     @Shadow protected int backgroundHeight;
@@ -41,6 +40,11 @@ public abstract class HandledScreenMixin<T extends ScreenHandler> extends Screen
 
     @Inject(method = "init", at = @At("TAIL"))
     public void addWidget(CallbackInfo ci) {
+        extraSlots$refreshWidget();
+    }
+
+    @Override
+    public void extraSlots$refreshWidget() {
         if(client != null)
             scrollableWidget = new ScrollableWidget(this.x+this.backgroundWidth, this.y+this.backgroundHeight-86, client);
     }
@@ -72,7 +76,7 @@ public abstract class HandledScreenMixin<T extends ScreenHandler> extends Screen
         if(this.client == null || this.client.player == null || this.getScreenHandler() == null || !Constant.RenderTextOnSlot) return;
         for(int i = 0; i < this.getScreenHandler().slots.size(); ++i) {
             Slot slot = this.getScreenHandler().slots.get(i);
-            if(!this.client.player.isCreative() && scrollableWidget.isActive() && slot.inventory == client.player.getInventory() && slot.getIndex() >=9 && slot.getIndex() < 36) {
+            if(!this.client.player.isCreative() && scrollableWidget.isActive() && isRightSlot(slot)) {
                 this.setZOffset(100);
                 this.itemRenderer.zOffset = 100.0F;
                 RenderSystem.setShader(GameRenderer::getPositionColorShader);
@@ -87,11 +91,16 @@ public abstract class HandledScreenMixin<T extends ScreenHandler> extends Screen
     }
 
     @Unique
+    private boolean isRightSlot(Slot slot) {
+        return slot.inventory == client.player.getInventory() && slot.getIndex() >=9 && slot.getIndex() < 36;
+    }
+
+    @Unique
     private Text getText(int i) {
         i += InventoryHelper.getCurrentScrollPos(client.player)*9;
         int totalSize = 27 + InventoryHelper.getSize(client.player);
         if(i > totalSize)
-            i-=totalSize;
+            i -= totalSize;
         return Text.of(String.valueOf(i));
     }
 }
